@@ -3,7 +3,6 @@ package com.gmail.nabrosimov.dontdisturb;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.media.AudioManager;
 import android.os.IBinder;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
@@ -35,13 +34,6 @@ public class CallListenerService extends Service {
         Log.d(TAG, "CallListenerService.onCreate called");
 
         TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-        AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-        if (audioManager == null) {
-            Log.v(TAG, "audioManager is null");
-        }
-        else {
-            Log.v(TAG, "audioManager is not null");
-        }
-        telephonyManager.listen(new CustomPhoneStateListener(audioManager), PhoneStateListener.LISTEN_CALL_STATE);
+        telephonyManager.listen(new CustomPhoneStateListener(this), PhoneStateListener.LISTEN_CALL_STATE);
     }
 }

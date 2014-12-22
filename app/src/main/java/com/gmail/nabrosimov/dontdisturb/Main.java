@@ -9,11 +9,14 @@ import android.view.MenuItem;
 
 public class Main extends Activity {
 
+    private final String TAG = "MainActivity";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         startService(new Intent(Main.this, CallListenerService.class));
+
     }
 
 
