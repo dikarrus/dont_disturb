@@ -21,7 +21,7 @@ public class CustomPhoneStateListener extends PhoneStateListener {
     private ContentResolver m_contentResolver;
 
     public CustomPhoneStateListener(Context inContext) {
-        m_audioManager = (AudioManager)inContext.getSystemService(Context.AUDIO_SERVICE);
+        m_audioManager = (AudioManager) inContext.getSystemService(Context.AUDIO_SERVICE);
         m_contentResolver = inContext.getContentResolver();
 
     }
@@ -29,7 +29,7 @@ public class CustomPhoneStateListener extends PhoneStateListener {
     @Override
     public void onCallStateChanged(int state, String incomingNumber) {
         Log.v(TAG, "onCallStateChanged called");
-        switch(state) {
+        switch (state) {
             case TelephonyManager.CALL_STATE_RINGING:
                 Log.d(TAG, "RINGING " + incomingNumber);
                 if (!isFavoriteContact(incomingNumber)) {
@@ -50,20 +50,29 @@ public class CustomPhoneStateListener extends PhoneStateListener {
     }
 
     private boolean isFavoriteContact(String inNumber) {
-        Uri queryUri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode("89031782297"));
 
-        String[] projection = new String[] {
+        Uri queryUri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(inNumber));
+        Log.v(TAG, "URI = " + queryUri.toString());
+
+        String[] projection = new String[]{
                 ContactsContract.PhoneLookup._ID,
-                ContactsContract.PhoneLookup.NUMBER};
+                ContactsContract.PhoneLookup.STARRED};
 
         String selection = ContactsContract.PhoneLookup.STARRED + "='1'";
 
         Cursor cursor = m_contentResolver.query(queryUri, projection, selection, null, null);
-        int cursorLength = cursor.getColumnCount();
+
+        boolean isStarred = false;
+        while (cursor.moveToNext()) {
+            int starred = cursor.getInt(cursor.getColumnIndexOrThrow(ContactsContract.PhoneLookup.STARRED));
+            if (starred != 0) {
+                isStarred = true;
+                break;
+            }
+            Log.v(TAG, String.format("Number = %s, starred = %d", inNumber, starred));
+        }
         cursor.close();
 
-        Log.v(TAG, "Cursor count: " + String.format("%d", cursorLength));
-
-        return cursorLength > 0 ? true : false;
+        return isStarred;
     }
 }
