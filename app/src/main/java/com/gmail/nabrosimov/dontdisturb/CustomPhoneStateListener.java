@@ -32,7 +32,7 @@ public class CustomPhoneStateListener extends PhoneStateListener {
         switch(state) {
             case TelephonyManager.CALL_STATE_RINGING:
                 Log.d(TAG, "RINGING " + incomingNumber);
-                if (isFavoriteContact(incomingNumber)) {
+                if (!isFavoriteContact(incomingNumber)) {
                     Log.d(TAG, "Setting silent mode");
                     mainRingerMode = m_audioManager.getRingerMode();
                     setRingerMode(AudioManager.RINGER_MODE_SILENT);
