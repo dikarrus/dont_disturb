@@ -7,7 +7,6 @@ import android.os.IBinder;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.util.Log;
-import android.widget.Toast;
 
 
 public class CallListenerService extends Service {
@@ -28,8 +27,6 @@ public class CallListenerService extends Service {
 
     @Override
     public void onCreate() {
-        Toast.makeText(this, "Служба создана",
-                Toast.LENGTH_SHORT).show();
 
         Log.d(TAG, "CallListenerService.onCreate called");
 

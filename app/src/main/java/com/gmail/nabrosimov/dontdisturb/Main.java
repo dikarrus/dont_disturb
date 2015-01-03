@@ -16,6 +16,11 @@ public class Main extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         startService(new Intent(Main.this, CallListenerService.class));
+        //startService(new Intent(Main.this, NLService.class));
+
+        Intent intent=new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS");
+        startActivity(intent);
+
     }
 
 
