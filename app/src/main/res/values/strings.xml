@@ -4,5 +4,6 @@
     <string name="app_name">Calmy</string>
     <string name="action_settings">Settings</string>
     <string name="manual_switcher_text">Manual</string>
+    <string name="manual_hint_text">Switch on if you want to recieve calls from favorites only</string>
 
 </resources>
